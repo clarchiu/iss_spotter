@@ -1,3 +1,5 @@
+const request = require('request');
+
 /**
  * Makes a single API request to retrieve the user's IP address.
  * Input:
@@ -6,8 +8,6 @@
  *   - An error, if any (nullable)
  *   - The IP address as a string (null if error). Example: "162.245.144.188"
  */
-const request = require('request');
-
 const fetchMyIP = function(callback) {
   // use request to fetch IP address from JSON API
   request('https://api64.ipify.org/?format=json', (err, res, body) => {
@@ -25,6 +25,14 @@ const fetchMyIP = function(callback) {
   });
 };
 
+/**
+ * Makes a single API request to retrieve geographical location (lat/lon) for the given ip address
+ * @param {The ip address to query} ip 
+ * @param {A callback fn to pass back an error or an object of resulting lat/lon pair } callback 
+ * Returns (via Callback)
+ *  - An error, if any (nullable)
+ *  - The lat/lon pair as an object
+ */
 const fetchCoordsByIP = function(ip, callback) {
   request(`http://ip-api.com/json/${ip}`, (err, res, body) => {
     if (err) return callback(err, null);
